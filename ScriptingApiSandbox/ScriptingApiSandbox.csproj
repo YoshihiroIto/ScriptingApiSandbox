@@ -24,6 +24,7 @@
             <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+        <PackageReference Include="ReactiveProperty" Version="9.7.0" />
     </ItemGroup>
 
     <ItemGroup>
@@ -31,5 +32,9 @@
         <DependentUpon>MainWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ScriptingApi\ScriptingApi.csproj" />
     </ItemGroup>
 </Project>

@@ -1,0 +1,4 @@
+﻿<Solution>
+  <Project Path="ScriptingApiSandbox\ScriptingApiSandbox.csproj" Type="Classic C#" />
+  <Project Path="ScriptingApi\ScriptingApi.csproj" Type="Classic C#" />
+</Solution>

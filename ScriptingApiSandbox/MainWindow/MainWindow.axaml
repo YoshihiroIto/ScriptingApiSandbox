@@ -6,10 +6,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         x:DataType="mainWindow:MainWindowViewModel"
         Title="ScriptingApiSandbox"
-        d:DesignHeight="450"
-        d:DesignWidth="800"
         Width="800"
-        Height="800"
+        Height="1000"
+        d:DesignHeight="1000"
+        d:DesignWidth="800"
         Icon="/Assets/avalonia-logo.ico"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d">
@@ -17,7 +17,33 @@
         <mainWindow:MainWindowViewModel />
     </Design.DataContext>
 
-    <TextBlock HorizontalAlignment="Center"
-               VerticalAlignment="Center"
-               Text="{Binding Greeting}" />
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top"
+                    Orientation="Horizontal">
+            <Button Command="{Binding ExecuteScriptCommand}"
+                    Content="Execute" />
+            
+            <Button Command="{Binding AddCommand}"
+                    Margin="12,0,0,0"
+                    Content="Add" />
+            
+            <Button Command="{Binding GreetCommand}"
+                    Margin="1,0,0,0"
+                    Content="Greet" />
+        </StackPanel>
+
+        <Grid ColumnDefinitions="*,*">
+            <TextBox Grid.Column="0"
+                     AcceptsReturn="True"
+                     Text="{Binding Script}" />
+
+            <Grid RowDefinitions="*,*"
+                  Grid.Column="1">
+                <ListBox Grid.Row="0"
+                         ItemsSource="{Binding Stdout}" />
+                <TextBlock Grid.Row="1"
+                           Text="{Binding AllFunctions}" />
+            </Grid>
+        </Grid>
+    </DockPanel>
 </Window>
