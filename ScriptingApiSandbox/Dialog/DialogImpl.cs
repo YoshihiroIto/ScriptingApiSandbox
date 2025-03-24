@@ -63,11 +63,12 @@ public sealed class DialogImpl : IDialog
         return elem;
     }
 
-    public IDialogButton Button(string caption)
+    public IDialogBool Bool(string caption, bool initial)
     {
-        var elem = new Element.DialogButtonImpl
+        var elem = new Element.DialogBoolImpl
         {
-            Caption = caption
+            Caption = caption,
+            Value = initial,
         };
         _elements.Add(elem);
         return elem;
@@ -94,6 +95,16 @@ public sealed class DialogImpl : IDialog
             Value = initial,
             Min = min,
             Max = max,
+        };
+        _elements.Add(elem);
+        return elem;
+    }
+    
+    public IDialogButton Button(string caption)
+    {
+        var elem = new Element.DialogButtonImpl
+        {
+            Caption = caption
         };
         _elements.Add(elem);
         return elem;

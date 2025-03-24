@@ -34,15 +34,17 @@ public sealed partial class MainWindowViewModel : ObservableObject
             name = d.Text("Enter your name", "no-name")
             intValue = d.Int("Int", 10, -100, 100);
             floatValue = d.Float("Float", 20, -100, 100);
+            boolValue = d.Bool("Bool", True);
+            
             
             
             name.TextChanged += lambda s, e: print(f"Name changed: {name.Text}")
             intValue.ValueChanged += lambda s, e: print(f"Int changed: {intValue.Value}")
             floatValue.ValueChanged += lambda s, e: print(f"Float changed: {floatValue.Value}")
-            
+            boolValue.ValueChanged += lambda s, e: print(f"Bool changed: {boolValue.Value}")
             
             d.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
-            d.Closed += lambda s, e: print(f"Dialog closed: {d.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}")
+            d.Closed += lambda s, e: print(f"Dialog closed: {d.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")
             
             d.Show()
         """;

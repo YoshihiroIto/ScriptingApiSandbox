@@ -12,9 +12,11 @@ public interface IDialog : IDialogUIElementsHost
 public interface IDialogUIElementsHost
 {
     IDialogText Text(string caption, string initial);
-    IDialogButton Button(string caption);
+    IDialogBool Bool(string caption, bool initial);
     IDialogInt Int(string caption, int initial, int min, int max);
     IDialogFloat Float(string caption, double initial, double min, double max);
+    
+    IDialogButton Button(string caption);
 }
 
 public interface IDialogElement
@@ -28,6 +30,13 @@ public interface IDialogText : IDialogElement
     event EventHandler? TextChanged;
 
     string Text { get; set; }
+}
+
+public interface IDialogBool : IDialogElement
+{
+    event EventHandler? ValueChanged;
+
+    bool Value { get; set; }
 }
 
 public interface IDialogInt : IDialogElement

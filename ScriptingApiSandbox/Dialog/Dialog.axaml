@@ -45,7 +45,7 @@
                             Content="{Binding Caption}"
                             IsEnabled="{Binding IsEnabled}" />
                 </DataTemplate>
-                
+
                 <DataTemplate DataType="element:DialogTextImpl">
                     <StackPanel Margin="0,0,0,12">
                         <TextBlock Margin="0,0,0,3"
@@ -56,6 +56,15 @@
                                  IsEnabled="{Binding IsEnabled}"
                                  Text="{Binding Text,
                                                 UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate DataType="element:DialogBoolImpl">
+                    <StackPanel Margin="0,0,0,12">
+                        <CheckBox HorizontalAlignment="Left"
+                                  IsChecked="{Binding Value,
+                                                      UpdateSourceTrigger=PropertyChanged}"
+                                  IsEnabled="{Binding IsEnabled}" />
                     </StackPanel>
                 </DataTemplate>
 
