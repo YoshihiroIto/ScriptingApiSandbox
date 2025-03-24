@@ -20,20 +20,13 @@
     <DockPanel>
         <StackPanel DockPanel.Dock="Top"
                     Orientation="Horizontal">
-            <Button Command="{Binding ExecuteScriptCommand}"
-                    Content="Execute" />
-
-            <Button Margin="12,0,0,0"
-                    Command="{Binding AddCommand}"
-                    Content="Add" />
-
-            <Button Margin="1,0,0,0"
-                    Command="{Binding GreetCommand}"
-                    Content="Greet" />
-
-            <Button Margin="1,0,0,0"
+            <Button Margin="0,0,1,0"
                     Command="{Binding ShowModalCommand}"
                     Content="ShowModal" />
+
+            <Button Margin="0,0,1,0"
+                    Command="{Binding ShowCommand}"
+                    Content="Show" />
         </StackPanel>
 
         <Grid ColumnDefinitions="*,*">

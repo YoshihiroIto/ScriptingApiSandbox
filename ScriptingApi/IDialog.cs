@@ -2,14 +2,19 @@
 
 public interface IDialog : IDialogUIElementsHost
 {
+    DialogResult DialogResult { get; }
+    event EventHandler? Closed;
+
     DialogResult ShowModal();
-    //void Show();
+    void Show();
 }
 
 public interface IDialogUIElementsHost
 {
     IDialogText Text(string caption, string initial);
     IDialogButton Button(string caption);
+    IDialogInt Int(string caption, int initial, int min, int max);
+    IDialogFloat Float(string caption, double initial, double min, double max);
 }
 
 public interface IDialogElement
@@ -20,7 +25,27 @@ public interface IDialogElement
 
 public interface IDialogText : IDialogElement
 {
+    event EventHandler? TextChanged;
+
     string Text { get; set; }
+}
+
+public interface IDialogInt : IDialogElement
+{
+    event EventHandler? ValueChanged;
+
+    int Value { get; set; }
+    int Min { get; set; }
+    int Max { get; set; }
+}
+
+public interface IDialogFloat : IDialogElement
+{
+    event EventHandler? ValueChanged;
+
+    double Value { get; set; }
+    double Min { get; set; }
+    double Max { get; set; }
 }
 
 public interface IDialogButton : IDialogElement

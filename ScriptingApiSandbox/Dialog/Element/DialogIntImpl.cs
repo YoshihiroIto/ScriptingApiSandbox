@@ -4,9 +4,9 @@ using ScriptingApi;
 
 namespace ScriptingApiSandbox.Dialog.Element;
 
-public sealed partial class DialogTextImpl : ObservableObject, IDialogText
+public sealed partial class DialogIntImpl : ObservableObject, IDialogInt
 {
-    public event EventHandler? TextChanged;
+    public event EventHandler? ValueChanged;
 
     [ObservableProperty]
     public partial string Caption { get; set; } = "";
@@ -15,13 +15,19 @@ public sealed partial class DialogTextImpl : ObservableObject, IDialogText
     public partial bool IsEnabled { get; set; } = true;
 
     [ObservableProperty]
-    public partial string Text { get; set; } = "";
+    public partial int Value { get; set; }
+
+    [ObservableProperty]
+    public partial int Min { get; set; }
+
+    [ObservableProperty]
+    public partial int Max { get; set; }
 
     [ObservableProperty]
     public partial double Width { get; set; } = 300;
 
-    partial void OnTextChanged(string value)
+    partial void OnValueChanged(int value)
     {
-        TextChanged?.Invoke(this, EventArgs.Empty);
+        ValueChanged?.Invoke(this, EventArgs.Empty);
     }
 }

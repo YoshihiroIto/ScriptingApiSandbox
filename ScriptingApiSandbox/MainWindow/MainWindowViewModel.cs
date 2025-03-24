@@ -13,68 +13,39 @@ namespace ScriptingApiSandbox.MainWindow;
 public sealed partial class MainWindowViewModel : ObservableObject
 {
     [ObservableProperty]
-    public partial string Script { get; set; } = """
-                                                 def show_modal():
-                                                     d = Dialog("Dialog Test")
-                                                     
-                                                     name = d.Text("Enter your name", "no-name")
-                                                     d.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
-                                                     
-                                                     result = d.ShowModal()
-                                                     
-                                                     print(f"result: {result}")
-                                                     
-                                                     if(result == DialogResult.Ok):
-                                                        print(name.Text)
-                                                 """;
-
-
-//      public partial string Script { get; set; } = """
-//                                                   print(sample.Name)
-//                                                   sample.Name = 'IronPython'
-//                                                   sample.SayHello()
-//
-//                                                   print(StaticMethod())
-//                                                   print(StaticClass.StaticMethod())
-//                                                   print(Color.Red)
-//
-//                                                   print(Math.Abs(-123))
-//                                                   print(sample.Color == Color.Green)
-//                                                   print(sample.Color)
-//                                                   print(type(Color))
-//
-//
-//
-//
-//
-//                                                   notifier = Notifier()
-//
-//                                                   # イベントハンドラを定義して購読
-//                                                   def on_notify(sender, args):
-//                                                       print("Event received!")
-//
-//                                                   notifier.OnNotify += on_notify
-//
-//                                                   # イベントを発火
-//                                                   notifier.Notify()  # "Notify called!" と "Event received!" が表示される
-//
-//                                                   def add(a, b):
-//                                                       return a + b
-//
-//                                                   def greet(name):
-//                                                       return f'Hello, {name}!'
-//                                                       
-//                                                   def show_modal():
-//                                                       d = Dialog("Dialog Test")
-//                                                       
-//                                                       name = d.Text("Enter your name", "no-name")
-//                                                       d.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
-//                                                       
-//                                                       result = d.ShowModal()
-//                                                       
-//                                                       print(result)
-//                                                       print(name.Text)
-//                                                   """;
+    public partial string Script { get; set; } =
+        """
+        def show_modal():
+            d = Dialog("ModalDialog Test")
+            
+            name = d.Text("Enter your name", "no-name")
+            d.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
+            d.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
+            
+            result = d.ShowModal()
+            print(f"result: {result}")
+            
+            if(result == DialogResult.Ok):
+               print(name.Text)
+               
+        def show():
+            d = Dialog("Dialog Test")
+            
+            name = d.Text("Enter your name", "no-name")
+            intValue = d.Int("Int", 10, -100, 100);
+            floatValue = d.Float("Float", 20, -100, 100);
+            
+            
+            name.TextChanged += lambda s, e: print(f"Name changed: {name.Text}")
+            intValue.ValueChanged += lambda s, e: print(f"Int changed: {intValue.Value}")
+            floatValue.ValueChanged += lambda s, e: print(f"Float changed: {floatValue.Value}")
+            
+            
+            d.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
+            d.Closed += lambda s, e: print(f"Dialog closed: {d.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}")
+            
+            d.Show()
+        """;
 
 
     [ObservableProperty]
@@ -118,7 +89,6 @@ public sealed partial class MainWindowViewModel : ObservableObject
         ExecuteScript();
     }
 
-    [RelayCommand]
     private void ExecuteScript()
     {
         _stdout.Clear();
@@ -128,28 +98,17 @@ public sealed partial class MainWindowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Add()
-    {
-        ExecuteScript();
-        var result = _scriptContext.CallFunction("add", 10, 20);
-
-        Console.WriteLine(result);
-    }
-
-    [RelayCommand]
-    private void Greet()
-    {
-        ExecuteScript();
-        var result = _scriptContext.CallFunction("greet", "Yoshihiro");
-
-        Console.WriteLine(result);
-    }
-
-    [RelayCommand]
     private void ShowModal()
     {
         ExecuteScript();
         _scriptContext.CallFunction("show_modal");
+    }
+
+    [RelayCommand]
+    private void Show()
+    {
+        ExecuteScript();
+        _scriptContext.CallFunction("show");
     }
 }
 
