@@ -100,7 +100,7 @@ public sealed class ScriptContext
                                   class CustomOutput:
                                       def write(self, text):
                                           if text and text.strip():
-                                              __custom_print__(text)  # C#関数を呼び出し
+                                              __custom_print__(text)
                                       def flush(self):
                                           pass
 

@@ -1,0 +1,63 @@
+﻿<Window x:Class="ScriptingApiSandbox.Dialog.Dialog"
+        xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dialog="clr-namespace:ScriptingApiSandbox.Dialog"
+        xmlns:element="clr-namespace:ScriptingApiSandbox.Dialog.Element"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:DataType="dialog:DialogImpl"
+        Title="Dialog"
+        d:DesignHeight="450"
+        d:DesignWidth="800"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        mc:Ignorable="d">
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Padding" Value="12,6" />
+        </Style>
+    </Window.Styles>
+
+    <DockPanel Margin="12">
+        <UniformGrid DockPanel.Dock="Bottom"
+                     HorizontalAlignment="Right"
+                     Columns="2">
+            <UniformGrid.Styles>
+                <Style Selector="Button">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </UniformGrid.Styles>
+
+            <Button Content="OK" Click="OkButton_OnClick" />
+            <Button Margin="6,0,0,0"
+                    Click="CancelButton_OnClick"
+                    Content="Cancel" />
+        </UniformGrid>
+
+        <ItemsControl ItemsSource="{Binding Elements}">
+            <ItemsControl.DataTemplates>
+                <DataTemplate DataType="element:DialogTextImpl">
+                    <StackPanel Margin="0,0,0,12">
+                        <TextBlock Text="{Binding Caption}" Margin="0,0,0,3" />
+
+                        <TextBox Width="{Binding Width}"
+                                 HorizontalAlignment="Left"
+                                 IsEnabled="{Binding IsEnabled}"
+                                 Text="{Binding Text,
+                                                UpdateSourceTrigger=PropertyChanged}" />
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate DataType="element:DialogButtonImpl">
+                    <Button Margin="0,0,0,12"
+                            HorizontalAlignment="Left"
+                            Command="{Binding ClickCommand}"
+                            Content="{Binding Caption}"
+                            IsEnabled="{Binding IsEnabled}" />
+                </DataTemplate>
+
+            </ItemsControl.DataTemplates>
+        </ItemsControl>
+    </DockPanel>
+</Window>
