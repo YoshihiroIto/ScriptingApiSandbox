@@ -37,17 +37,29 @@
         </UniformGrid>
 
         <ItemsControl ItemsSource="{Binding Elements}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="{Binding AvaloniaOrientation}"
+                                Spacing="12" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
             <ItemsControl.DataTemplates>
                 <DataTemplate DataType="element:DialogButtonImpl">
-                    <Button Margin="0,0,0,12"
-                            HorizontalAlignment="Left"
+                    <Button HorizontalAlignment="Left"
                             Command="{Binding ClickCommand}"
                             Content="{Binding Caption}"
                             IsEnabled="{Binding IsEnabled}" />
                 </DataTemplate>
 
+                <DataTemplate DataType="element:DialogLabelImpl">
+                    <TextBlock HorizontalAlignment="Left"
+                               IsEnabled="{Binding IsEnabled}"
+                               Text="{Binding Caption}" />
+                </DataTemplate>
+
                 <DataTemplate DataType="element:DialogTextImpl">
-                    <StackPanel Margin="0,0,0,12">
+                    <StackPanel>
                         <TextBlock Margin="0,0,0,3"
                                    Text="{Binding Caption}" />
 
@@ -60,7 +72,7 @@
                 </DataTemplate>
 
                 <DataTemplate DataType="element:DialogBoolImpl">
-                    <StackPanel Margin="0,0,0,12">
+                    <StackPanel>
                         <CheckBox HorizontalAlignment="Left"
                                   Content="{Binding Caption}"
                                   IsChecked="{Binding Value,
@@ -70,7 +82,7 @@
                 </DataTemplate>
 
                 <DataTemplate DataType="element:DialogIntImpl">
-                    <StackPanel Margin="0,0,0,12">
+                    <StackPanel>
                         <TextBlock Margin="0,0,0,3"
                                    Text="{Binding Caption}" />
 
@@ -81,7 +93,6 @@
                                      HorizontalAlignment="Right"
                                      Text="{Binding Value,
                                                     UpdateSourceTrigger=PropertyChanged}" />
-
 
                             <Slider Margin="0,-12"
                                     VerticalAlignment="Center"
@@ -95,7 +106,7 @@
                 </DataTemplate>
 
                 <DataTemplate DataType="element:DialogFloatImpl">
-                    <StackPanel Margin="0,0,0,12">
+                    <StackPanel>
                         <TextBlock Margin="0,0,0,3"
                                    Text="{Binding Caption}" />
 
@@ -114,6 +125,17 @@
                                     Value="{Binding Value}" />
                         </DockPanel>
                     </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate DataType="element:DialogGroupImpl">
+                    <ItemsControl ItemsSource="{Binding Elements}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="{Binding AvaloniaOrientation}"
+                                            Spacing="12" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
                 </DataTemplate>
             </ItemsControl.DataTemplates>
         </ItemsControl>

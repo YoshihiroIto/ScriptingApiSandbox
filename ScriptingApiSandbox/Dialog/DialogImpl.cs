@@ -1,33 +1,31 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using ScriptingApi;
+using ScriptingApiSandbox.Dialog.Element;
 
 namespace ScriptingApiSandbox.Dialog;
 
 using static GuiHelper;
 
-public sealed class DialogImpl : IDialog
+public sealed class DialogImpl(string title) : IDialog
 {
     public DialogResult DialogResult { get; internal set; } = DialogResult.Cancel;
 
     public event EventHandler? Closed;
 
-    public ReadOnlyObservableCollection<IDialogElement> Elements { get; }
+    internal ReadOnlyObservableCollection<IDialogElement> Elements => _group.Elements;
+    internal Avalonia.Layout.Orientation AvaloniaOrientation => _group.AvaloniaOrientation;
 
-    private readonly ObservableCollection<IDialogElement> _elements = new();
-    private readonly string _title;
-
-    public DialogImpl(string title)
+    private readonly DialogGroupImpl _group = new()
     {
-        _title = title;
-        Elements = new(_elements);
-    }
+        Orientation = Orientation.Vertical
+    };
 
     public DialogResult ShowModal()
     {
         var dialog = new Dialog
         {
-            Title = _title,
+            Title = title,
             DataContext = this
         };
 
@@ -42,7 +40,7 @@ public sealed class DialogImpl : IDialog
     {
         var dialog = new Dialog
         {
-            Title = _title,
+            Title = title,
             DataContext = this
         };
 
@@ -53,60 +51,23 @@ public sealed class DialogImpl : IDialog
     }
 
     public IDialogText Text(string caption, string initial)
-    {
-        var elem = new Element.DialogTextImpl
-        {
-            Caption = caption,
-            Text = initial,
-        };
-        _elements.Add(elem);
-        return elem;
-    }
+        => _group.Text(caption, initial);
 
     public IDialogBool Bool(string caption, bool initial)
-    {
-        var elem = new Element.DialogBoolImpl
-        {
-            Caption = caption,
-            Value = initial,
-        };
-        _elements.Add(elem);
-        return elem;
-    }
+        => _group.Bool(caption, initial);
 
     public IDialogInt Int(string caption, int initial, int min, int max)
-    {
-        var elem = new Element.DialogIntImpl
-        {
-            Caption = caption,
-            Value = initial,
-            Min = min,
-            Max = max,
-        };
-        _elements.Add(elem);
-        return elem;
-    }
+        => _group.Int(caption, initial, min, max);
 
     public IDialogFloat Float(string caption, double initial, double min, double max)
-    {
-        var elem = new Element.DialogFloatImpl
-        {
-            Caption = caption,
-            Value = initial,
-            Min = min,
-            Max = max,
-        };
-        _elements.Add(elem);
-        return elem;
-    }
-    
+        => _group.Float(caption, initial, min, max);
+
     public IDialogButton Button(string caption)
-    {
-        var elem = new Element.DialogButtonImpl
-        {
-            Caption = caption
-        };
-        _elements.Add(elem);
-        return elem;
-    }
+        => _group.Button(caption);
+    
+    public IDialogLabel Label(string caption)
+        => _group.Label(caption);
+
+    public IDialogGroup Group(Orientation orientation)
+        => _group.Group(orientation);
 }

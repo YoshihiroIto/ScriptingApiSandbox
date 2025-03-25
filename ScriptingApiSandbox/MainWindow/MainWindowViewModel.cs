@@ -16,37 +16,49 @@ public sealed partial class MainWindowViewModel : ObservableObject
     public partial string Script { get; set; } =
         """
         def show_modal():
-            d = Dialog("ModalDialog Test")
+            dlg = Dialog("ModalDialog Test")
             
-            name = d.Text("Enter your name", "no-name")
-            d.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
-            d.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
+            name = dlg.Text("Enter your name", "no-name")
+            dlg.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
+            dlg.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
             
-            result = d.ShowModal()
+            result = dlg.ShowModal()
             print(f"result: {result}")
             
             if(result == DialogResult.Ok):
                print(name.Text)
                
         def show():
-            d = Dialog("Dialog Test")
+            dlg = Dialog("Dialog Test")
             
-            name = d.Text("Enter your name", "no-name")
-            intValue = d.Int("Int", 10, -100, 100);
-            floatValue = d.Float("Float", 20, -100, 100);
-            boolValue = d.Bool("Bool", True);
-            
-            
+            name = dlg.Text("Enter your name", "no-name")
+            intValue = dlg.Int("Int", 10, -100, 100);
+            floatValue = dlg.Float("Float", 20, -100, 100);
+            boolValue = dlg.Bool("Bool", True);
             
             name.TextChanged += lambda s, e: print(f"Name changed: {name.Text}")
             intValue.ValueChanged += lambda s, e: print(f"Int changed: {intValue.Value}")
             floatValue.ValueChanged += lambda s, e: print(f"Float changed: {floatValue.Value}")
             boolValue.ValueChanged += lambda s, e: print(f"Bool changed: {boolValue.Value}")
             
-            d.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
-            d.Closed += lambda s, e: print(f"Dialog closed: {d.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")
+            dlg.Label("ラベル");
             
-            d.Show()
+            dlg.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
+            
+            g = dlg.Group(Orientation.Horizontal)
+            g.Bool("X", False)
+            g.Bool("Y", False)
+            g.Bool("Z", False)
+            
+            
+            
+            
+            
+            
+            
+            dlg.Closed += lambda s, e: print(f"Dialog closed: {dlg.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")
+            
+            dlg.Show()
         """;
 
 
@@ -76,17 +88,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
             })
             .AddTo(_trash);
 
-
-        var sample = new SampleObject(_scriptContext);
-        _scriptContext.SetVariable("sample", sample);
-        _scriptContext.SetVariable("StaticMethod", new Func<string>(StaticClass.StaticMethod));
-        _scriptContext.SetType(nameof(StaticClass), typeof(StaticClass));
-        _scriptContext.SetType<Color>(nameof(Color));
-        _scriptContext.SetType(nameof(Math), typeof(Math));
-        _scriptContext.SetType<Notifier>(nameof(Notifier));
-
         _scriptContext.SetType<DialogImpl>("Dialog");
         _scriptContext.SetType<DialogResult>(nameof(DialogResult));
+        _scriptContext.SetType<Orientation>(nameof(Orientation));
 
         ExecuteScript();
     }
@@ -111,43 +115,5 @@ public sealed partial class MainWindowViewModel : ObservableObject
     {
         ExecuteScript();
         _scriptContext.CallFunction("show");
-    }
-}
-
-public enum Color
-{
-    Red,
-    Green,
-    Blue
-}
-
-public static class StaticClass
-{
-    public static string StaticMethod()
-    {
-        return "This is a static method.";
-    }
-}
-
-public class SampleObject(ScriptContext scriptContext)
-{
-    public string Name { get; set; } = "DefaultName";
-
-    public Color Color { get; set; } = Color.Green;
-
-    public void SayHello()
-    {
-        scriptContext.InvokeStandardOutput($"Hello from {Name}!");
-    }
-}
-
-public class Notifier
-{
-    public event EventHandler? OnNotify;
-
-    public void Notify()
-    {
-        Console.WriteLine("Notify called!");
-        OnNotify?.Invoke(this, EventArgs.Empty);
     }
 }

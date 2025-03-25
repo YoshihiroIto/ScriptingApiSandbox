@@ -1,4 +1,6 @@
-﻿namespace ScriptingApi;
+﻿using System.Collections.ObjectModel;
+
+namespace ScriptingApi;
 
 public interface IDialog : IDialogUIElementsHost
 {
@@ -15,8 +17,11 @@ public interface IDialogUIElementsHost
     IDialogBool Bool(string caption, bool initial);
     IDialogInt Int(string caption, int initial, int min, int max);
     IDialogFloat Float(string caption, double initial, double min, double max);
-    
+
     IDialogButton Button(string caption);
+    IDialogLabel Label(string caption);
+
+    IDialogGroup Group(Orientation orientation);
 }
 
 public interface IDialogElement
@@ -62,8 +67,21 @@ public interface IDialogButton : IDialogElement
     event EventHandler? Clicked;
 }
 
+public interface IDialogLabel : IDialogElement;
+
+public interface IDialogGroup : IDialogElement, IDialogUIElementsHost
+{
+    ReadOnlyObservableCollection<IDialogElement> Elements { get; }
+}
+
 public enum DialogResult
 {
     Ok,
     Cancel,
+}
+
+public enum Orientation
+{
+    Horizontal,
+    Vertical,
 }
