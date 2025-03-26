@@ -28,29 +28,36 @@ public sealed partial class MainWindowViewModel : ObservableObject
             if(result == DialogResult.Ok):
                print(name.Text)
                
-        def show():
+        def show_modeless():
             dlg = Dialog("Dialog Test")
             
-            name = dlg.Text("Enter your name", "no-name")
-            intValue = dlg.Int("Int", 10, -100, 100);
-            floatValue = dlg.Float("Float", 20, -100, 100);
-            boolValue = dlg.Bool("Bool", True);
+            g = dlg.Group(Orientation.Horizontal)
+            left = g.Group(Orientation.Vertical);
+            right = g.Group(Orientation.Vertical);
+            
+            name = left.Text("Enter your name", "no-name")
+            intValue = left.Int("Int", 10, -100, 100);
+            floatValue = left.Float("Float", 20, -100, 100);
+            boolValue = left.Bool("Bool", True);
             
             name.TextChanged += lambda s, e: print(f"Name changed: {name.Text}")
             intValue.ValueChanged += lambda s, e: print(f"Int changed: {intValue.Value}")
             floatValue.ValueChanged += lambda s, e: print(f"Float changed: {floatValue.Value}")
             boolValue.ValueChanged += lambda s, e: print(f"Bool changed: {boolValue.Value}")
             
-            dlg.Label("ラベル");
+            left.Label("ラベル");
             
-            dlg.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
+            items = ["Apple", "Banana", "Orange", "Peach", "Melon", "Grape", "Strawberry"]
+            left.Choice(*items).SelectedChanged += lambda s, e: print(f"Choice changed: {s.SelectedIndex}, {s.SelectedItem}")
             
-            g = dlg.Group(Orientation.Horizontal)
-            g.Bool("X", False)
-            g.Bool("Y", False)
-            g.Bool("Z", False)
+            left.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
             
-            tab = dlg.Tab()
+            xyz = left.Group(Orientation.Horizontal)
+            xyz.Bool("X", False)
+            xyz.Bool("Y", False)
+            xyz.Bool("Z", False)
+            
+            tab = right.Tab()
             
             p0 = tab.Page("Page0")
             p1 = tab.Page("Page1")
@@ -63,14 +70,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
             p2.Float("Float", 20, -100, 100);
             
             dlg.Closed += lambda s, e: print(f"Dialog closed: {dlg.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")
-            
             dlg.Show()
         """;
 
-
     [ObservableProperty]
     public partial string AllFunctions { get; set; } = "";
-
 
     public ReadOnlyReactiveCollection<string> Stdout { get; }
 
@@ -117,9 +121,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void Show()
+    private void ShowModeless()
     {
         ExecuteScript();
-        _scriptContext.CallFunction("show");
+        _scriptContext.CallFunction("show_modeless");
     }
 }

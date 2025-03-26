@@ -62,6 +62,9 @@ public sealed class DialogImpl(string title) : IDialog
     public IDialogFloat Float(string caption, double initial, double min, double max)
         => _group.Float(caption, initial, min, max);
 
+    public IDialogChoice Choice(params string[] items)
+        => _group.Choice(items);
+
     public IDialogButton Button(string caption)
         => _group.Button(caption);
     

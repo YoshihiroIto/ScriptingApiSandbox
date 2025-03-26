@@ -17,6 +17,7 @@ public interface IDialogUIElementsHost
     IDialogBool Bool(string caption, bool initial);
     IDialogInt Int(string caption, int initial, int min, int max);
     IDialogFloat Float(string caption, double initial, double min, double max);
+    IDialogChoice Choice(params string[] items);
 
     IDialogButton Button(string caption);
     IDialogLabel Label(string caption);
@@ -63,6 +64,14 @@ public interface IDialogFloat : IDialogElement
     double Max { get; set; }
 }
 
+public interface IDialogChoice : IDialogElement
+{
+    event EventHandler? SelectedChanged;
+    
+    int SelectedIndex { get; set; }
+    object? SelectedItem { get; }
+}
+
 public interface IDialogButton : IDialogElement
 {
     event EventHandler? Clicked;
@@ -81,7 +90,6 @@ public interface IDialogTab : IDialogElement
 
     IDialogGroup Page(string name);
 }
-
 
 public enum DialogResult
 {

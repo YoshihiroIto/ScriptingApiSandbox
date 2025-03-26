@@ -76,6 +76,13 @@ public sealed partial class DialogGroupImpl : ObservableObject, IDialogGroup
         return elem;
     }
 
+    public IDialogChoice Choice(params string[] items)
+    {
+        var elem = new DialogChoiceImpl(items);
+        _elements.Add(elem);
+        return elem;
+    }
+
     public IDialogButton Button(string caption)
     {
         var elem = new DialogButtonImpl
