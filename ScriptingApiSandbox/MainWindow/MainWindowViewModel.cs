@@ -94,10 +94,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
                 h => _scriptContext.StandardOutput += h,
                 h => _scriptContext.StandardOutput -= h)
             .Select(e => e.EventArgs)
-            .Subscribe(e =>
-            {
-                _stdout.Add(e.Text);
-            })
+            .Subscribe(e => _stdout.Add(e.Text))
             .AddTo(_trash);
 
         _scriptContext.SetType<DialogImpl>("Dialog");

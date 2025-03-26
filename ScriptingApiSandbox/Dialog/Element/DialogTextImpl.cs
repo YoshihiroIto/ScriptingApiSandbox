@@ -20,6 +20,7 @@ public sealed partial class DialogTextImpl : ObservableObject, IDialogText
     [ObservableProperty]
     public partial double Width { get; set; } = 300;
 
+    // ReSharper disable once UnusedParameterInPartialMethod
     partial void OnTextChanged(string value)
     {
         TextChanged?.Invoke(this, EventArgs.Empty);

@@ -32,6 +32,7 @@ public sealed partial class DialogChoiceImpl : ObservableObject, IDialogChoice
         SelectedIndex = Items.Count is 0 ? -1 : 0;
     }
 
+    // ReSharper disable once UnusedParameterInPartialMethod
     partial void OnSelectedIndexChanged(int value)
     {
         SelectedChanged?.Invoke(this, EventArgs.Empty);

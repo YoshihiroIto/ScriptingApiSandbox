@@ -6,12 +6,12 @@ namespace ScriptingApiSandbox.MainWindow;
 
 public partial class MainWindow : Window
 {
+    private MainWindowViewModel ViewModel => DataContext as MainWindowViewModel ?? throw new InvalidOperationException();
+    
     public MainWindow()
     {
         InitializeComponent();
     }
-
-    private MainWindowViewModel ViewModel => DataContext as MainWindowViewModel ?? throw new InvalidOperationException();
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
     {

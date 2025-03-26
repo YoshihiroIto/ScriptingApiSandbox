@@ -26,6 +26,7 @@ public sealed partial class DialogFloatImpl : ObservableObject, IDialogFloat
     [ObservableProperty]
     public partial double Width { get; set; } = 300;
 
+    // ReSharper disable once UnusedParameterInPartialMethod
     partial void OnValueChanged(double value)
     {
         ValueChanged?.Invoke(this, EventArgs.Empty);

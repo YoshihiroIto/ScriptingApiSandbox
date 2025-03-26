@@ -17,6 +17,7 @@ public sealed partial class DialogBoolImpl : ObservableObject, IDialogBool
     [ObservableProperty]
     public partial bool Value { get; set; }
 
+    // ReSharper disable once UnusedParameterInPartialMethod
     partial void OnValueChanged(bool value)
     {
         ValueChanged?.Invoke(this, EventArgs.Empty);

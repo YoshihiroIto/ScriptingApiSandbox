@@ -29,10 +29,11 @@ internal static class GuiHelper
     public static void ShowDialogSync(this Window window, Window parent)
     {
         using var source = new CancellationTokenSource();
-    
-        window.ShowDialog(parent)
-            // ReSharper disable once AccessToDisposedClosure
-            .ContinueWith(_ => source.Cancel(), TaskScheduler.FromCurrentSynchronizationContext());
+        
+        var task = window.ShowDialog(parent);
+
+        // ReSharper disable once AccessToDisposedClosure
+        task.ContinueWith(_ => source.Cancel(), TaskScheduler.FromCurrentSynchronizationContext());
     
         Dispatcher.UIThread.MainLoop(source.Token);
     }
