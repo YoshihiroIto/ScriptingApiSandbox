@@ -103,6 +103,16 @@ public sealed partial class DialogGroupImpl : ObservableObject, IDialogGroup
         return elem;
     }
 
+    public IDialogSeparator Separator()
+    {
+        var elem = new DialogSeparatorImpl
+        {
+            Orientation = Orientation
+        };
+        _elements.Add(elem);
+        return elem;
+    }
+
     public IDialogGroup Group(Orientation orientation)
     {
         var elem = new DialogGroupImpl

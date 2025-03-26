@@ -79,6 +79,8 @@ public interface IDialogButton : IDialogElement
 
 public interface IDialogLabel : IDialogElement;
 
+public interface IDialogSeparator : IDialogElement;
+
 public interface IDialogGroup : IDialogElement, IDialogUIElementsHost
 {
     ReadOnlyObservableCollection<IDialogElement> Elements { get; }

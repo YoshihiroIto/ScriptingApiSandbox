@@ -59,6 +59,26 @@
                                Text="{Binding Caption}" />
                 </DataTemplate>
 
+                <DataTemplate DataType="element:DialogSeparatorImpl">
+                    <Rectangle Fill="Gray"
+                               IsEnabled="{Binding IsEnabled}"
+                               Tag="{Binding Orientation}">
+                        <Rectangle.Styles>
+                            <Style Selector="Rectangle[Tag=Vertical]">
+                                <Setter Property="Height" Value="1" />
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0,6" />
+                            </Style>
+
+                            <Style Selector="Rectangle[Tag=Horizontal]">
+                                <Setter Property="Width" Value="1" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="6,0" />
+                            </Style>
+                        </Rectangle.Styles>
+                    </Rectangle>
+                </DataTemplate>
+
                 <DataTemplate DataType="element:DialogTextImpl">
                     <StackPanel>
                         <TextBlock Margin="0,0,0,3"

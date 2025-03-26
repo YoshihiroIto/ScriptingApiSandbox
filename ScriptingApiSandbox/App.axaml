@@ -1,8 +1,9 @@
-<Application xmlns="https://github.com/avaloniaui"
+﻿<Application x:Class="ScriptingApiSandbox.App"
+             xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="ScriptingApiSandbox.App"
              RequestedThemeVariant="Default">
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
     </Application.Styles>
 </Application>

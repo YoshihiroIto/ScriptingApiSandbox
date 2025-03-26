@@ -33,7 +33,10 @@ public sealed partial class MainWindowViewModel : ObservableObject
             
             g = dlg.Group(Orientation.Horizontal)
             left = g.Group(Orientation.Vertical);
+            center = g.Group(Orientation.Horizontal);
             right = g.Group(Orientation.Vertical);
+            
+            center.Separator();
             
             name = left.Text("Enter your name", "no-name")
             intValue = left.Int("Int", 10, -100, 100);
@@ -44,6 +47,8 @@ public sealed partial class MainWindowViewModel : ObservableObject
             intValue.ValueChanged += lambda s, e: print(f"Int changed: {intValue.Value}")
             floatValue.ValueChanged += lambda s, e: print(f"Float changed: {floatValue.Value}")
             boolValue.ValueChanged += lambda s, e: print(f"Bool changed: {boolValue.Value}")
+            
+            left.Separator();
             
             left.Label("ラベル");
             

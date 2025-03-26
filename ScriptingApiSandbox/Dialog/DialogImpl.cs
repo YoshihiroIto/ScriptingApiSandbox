@@ -70,6 +70,9 @@ public sealed class DialogImpl(string title) : IDialog
     
     public IDialogLabel Label(string caption)
         => _group.Label(caption);
+    
+    public IDialogSeparator Separator()
+        => _group.Separator();
 
     public IDialogGroup Group(Orientation orientation)
         => _group.Group(orientation);
