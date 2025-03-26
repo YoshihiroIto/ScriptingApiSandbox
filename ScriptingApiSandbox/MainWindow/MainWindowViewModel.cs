@@ -29,12 +29,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
                print(name.Text)
                
         def show_modeless():
-            dlg = Dialog("Dialog Test")
+            dlg = Dialog("Dialog Test", Orientation.Horizontal)
             
-            g = dlg.Group(Orientation.Horizontal)
-            left = g.Group(Orientation.Vertical);
-            center = g.Group(Orientation.Horizontal);
-            right = g.Group(Orientation.Vertical);
+            left = dlg.Group(Orientation.Vertical);
+            center = dlg.Group(Orientation.Horizontal);
+            right = dlg.Group(Orientation.Vertical);
             
             center.Separator();
             
@@ -49,7 +48,6 @@ public sealed partial class MainWindowViewModel : ObservableObject
             boolValue.ValueChanged += lambda s, e: print(f"Bool changed: {boolValue.Value}")
             
             left.Separator();
-            
             left.Label("ラベル");
             
             items = ["Apple", "Banana", "Orange", "Peach", "Melon", "Grape", "Strawberry"]
@@ -63,7 +61,6 @@ public sealed partial class MainWindowViewModel : ObservableObject
             xyz.Bool("Z", False)
             
             tab = right.Tab()
-            
             p0 = tab.Page("Page0")
             p1 = tab.Page("Page1")
             p2 = tab.Page("Page2")

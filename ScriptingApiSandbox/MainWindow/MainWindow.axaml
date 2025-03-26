@@ -36,6 +36,7 @@
                                      BorderBrush="LightGray"
                                      BorderThickness="0,1,1,0"
                                      ShowLineNumbers="True"
+                                     FontSize="12"
                                      FontFamily="Cascadia Code, Consolas, Menlo, Monospace"
                                      SyntaxHighlighting="Python"
                                      TextChanged="TextEditor_OnTextChanged" />

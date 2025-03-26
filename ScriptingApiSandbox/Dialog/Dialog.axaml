@@ -169,7 +169,8 @@
                                 ItemsSource="{Binding Pages}">
                         <TabControl.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Caption}" />
+                                <TextBlock FontSize="{Binding $parent[Window].FontSize}"
+                                           Text="{Binding Caption}" />
                             </DataTemplate>
                         </TabControl.ItemTemplate>
                     </TabControl>

@@ -7,7 +7,7 @@ namespace ScriptingApiSandbox.Dialog;
 
 using static GuiHelper;
 
-public sealed class DialogImpl(string title) : IDialog
+public sealed class DialogImpl(string title, Orientation orientation = Orientation.Vertical) : IDialog
 {
     public DialogResult DialogResult { get; internal set; } = DialogResult.Cancel;
 
@@ -18,7 +18,7 @@ public sealed class DialogImpl(string title) : IDialog
 
     private readonly DialogGroupImpl _group = new()
     {
-        Orientation = Orientation.Vertical
+        Orientation = orientation
     };
 
     public DialogResult ShowModal()
