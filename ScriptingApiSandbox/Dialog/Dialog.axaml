@@ -137,6 +137,16 @@
                         </ItemsControl.ItemsPanel>
                     </ItemsControl>
                 </DataTemplate>
+
+                <DataTemplate DataType="element:DialogTabImpl">
+                    <TabControl ItemsSource="{Binding Pages}" Padding="0">
+                        <TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Caption}" />
+                            </DataTemplate>
+                        </TabControl.ItemTemplate>
+                    </TabControl>
+                </DataTemplate>
             </ItemsControl.DataTemplates>
         </ItemsControl>
     </DockPanel>

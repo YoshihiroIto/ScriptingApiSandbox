@@ -22,6 +22,7 @@ public interface IDialogUIElementsHost
     IDialogLabel Label(string caption);
 
     IDialogGroup Group(Orientation orientation);
+    IDialogTab Tab();
 }
 
 public interface IDialogElement
@@ -73,6 +74,14 @@ public interface IDialogGroup : IDialogElement, IDialogUIElementsHost
 {
     ReadOnlyObservableCollection<IDialogElement> Elements { get; }
 }
+
+public interface IDialogTab : IDialogElement
+{
+    ReadOnlyObservableCollection<IDialogGroup> Pages { get; }
+
+    IDialogGroup Page(string name);
+}
+
 
 public enum DialogResult
 {

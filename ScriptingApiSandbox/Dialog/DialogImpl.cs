@@ -70,4 +70,7 @@ public sealed class DialogImpl(string title) : IDialog
 
     public IDialogGroup Group(Orientation orientation)
         => _group.Group(orientation);
+
+    public IDialogTab Tab()
+        => _group.Tab();
 }

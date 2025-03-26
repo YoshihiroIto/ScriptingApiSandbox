@@ -50,11 +50,17 @@ public sealed partial class MainWindowViewModel : ObservableObject
             g.Bool("Y", False)
             g.Bool("Z", False)
             
+            tab = dlg.Tab()
             
+            p0 = tab.Page("Page0")
+            p1 = tab.Page("Page1")
+            p2 = tab.Page("Page2")
             
-            
-            
-            
+            p0.Text("Text", "text")
+            p0.Bool("X", False)
+            p0.Bool("Y", False)
+            p1.Text("T0", "000")
+            p2.Float("Float", 20, -100, 100);
             
             dlg.Closed += lambda s, e: print(f"Dialog closed: {dlg.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")
             

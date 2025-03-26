@@ -105,4 +105,11 @@ public sealed partial class DialogGroupImpl : ObservableObject, IDialogGroup
         _elements.Add(elem);
         return elem;
     }
+
+    public IDialogTab Tab()
+    {
+        var elem = new DialogTabImpl();
+        _elements.Add(elem);
+        return elem;
+    }
 }
