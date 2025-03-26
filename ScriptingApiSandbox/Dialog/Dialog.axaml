@@ -1,6 +1,7 @@
 ﻿<Window x:Class="ScriptingApiSandbox.Dialog.Dialog"
         xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ScriptingApiSandbox.Dialog.Controls"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:dialog="clr-namespace:ScriptingApiSandbox.Dialog"
         xmlns:element="clr-namespace:ScriptingApiSandbox.Dialog.Element"
@@ -151,6 +152,20 @@
                 <DataTemplate DataType="element:DialogChoiceImpl">
                     <ComboBox ItemsSource="{Binding Items}"
                               SelectedIndex="{Binding SelectedIndex}" />
+                </DataTemplate>
+
+                <DataTemplate DataType="element:DialogGroupBoxImpl">
+                    <controls:GroupBox Header="{Binding Caption}">
+                        <ItemsControl
+                                      ItemsSource="{Binding Elements}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="{Binding AvaloniaOrientation}"
+                                                Spacing="12" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </controls:GroupBox>
                 </DataTemplate>
 
                 <DataTemplate DataType="element:DialogGroupImpl">

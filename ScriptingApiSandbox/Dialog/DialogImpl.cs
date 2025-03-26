@@ -77,6 +77,9 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
     public IDialogGroup Group(Orientation orientation)
         => _group.Group(orientation);
 
+    public IDialogGroupBox GroupBox(string caption, Orientation orientation)
+        => _group.GroupBox(caption, orientation);
+
     public IDialogTab Tab()
         => _group.Tab();
 }

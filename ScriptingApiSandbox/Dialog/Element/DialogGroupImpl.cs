@@ -4,7 +4,7 @@ using ScriptingApi;
 
 namespace ScriptingApiSandbox.Dialog.Element;
 
-public sealed partial class DialogGroupImpl : ObservableObject, IDialogGroup
+public partial class DialogGroupImpl : ObservableObject, IDialogGroup
 {
     [ObservableProperty]
     public partial string Caption { get; set; } = "";
@@ -117,6 +117,17 @@ public sealed partial class DialogGroupImpl : ObservableObject, IDialogGroup
     {
         var elem = new DialogGroupImpl
         {
+            Orientation = orientation
+        };
+        _elements.Add(elem);
+        return elem;
+    }
+
+    public IDialogGroupBox GroupBox(string caption, Orientation orientation)
+    {
+        var elem = new DialogGroupBoxImpl
+        {
+            Caption = caption,
             Orientation = orientation
         };
         _elements.Add(elem);

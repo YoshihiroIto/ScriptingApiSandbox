@@ -23,6 +23,7 @@ public interface IDialogUIElementsHost
     IDialogLabel Label(string caption);
 
     IDialogGroup Group(Orientation orientation);
+    IDialogGroupBox GroupBox(string caption, Orientation orientation);
     IDialogTab Tab();
 }
 
@@ -67,7 +68,7 @@ public interface IDialogFloat : IDialogElement
 public interface IDialogChoice : IDialogElement
 {
     event EventHandler? SelectedChanged;
-    
+
     int SelectedIndex { get; set; }
     object? SelectedItem { get; }
 }
@@ -85,6 +86,8 @@ public interface IDialogGroup : IDialogElement, IDialogUIElementsHost
 {
     ReadOnlyObservableCollection<IDialogElement> Elements { get; }
 }
+
+public interface IDialogGroupBox : IDialogGroup;
 
 public interface IDialogTab : IDialogElement
 {

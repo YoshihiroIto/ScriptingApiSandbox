@@ -24,7 +24,7 @@ internal static class GuiHelper
         }
     }
 
-    // https://github.com/AvaloniaUI/Avalonia/issues/4810 
+    // https://github.com/avaloniaui/avalonia/issues/4810 
 
     public static void ShowDialogSync(this Window window, Window parent)
     {

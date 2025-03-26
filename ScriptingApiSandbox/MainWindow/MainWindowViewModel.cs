@@ -60,6 +60,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
             xyz.Bool("Y", False)
             xyz.Bool("Z", False)
             
+            pos = left.GroupBox("Rotate", Orientation.Vertical)
+            pos.Float("X", 0, -360, 360);
+            pos.Float("Y", 0, -360, 360);
+            pos.Float("Z", 0, -360, 360);
+            
             tab = right.Tab()
             p0 = tab.Page("Page0")
             p1 = tab.Page("Page1")
