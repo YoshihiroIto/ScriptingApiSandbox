@@ -1,4 +1,5 @@
 ﻿using System;
+using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using ScriptingApi;
@@ -13,16 +14,28 @@ public partial class Dialog : Window
     {
         InitializeComponent();
     }
+    
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs e)
+    {
+        base.OnPropertyChanged(e);
+
+        if (e.Property == DataContextProperty)
+            ViewModel.RequireClose += CloseInternal;
+    }
 
     private void OkButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        ViewModel.DialogResult = DialogResult.Ok;
-        Close(DialogResult.Ok);
+        CloseInternal(DialogResult.Ok);
     }
 
     private void CancelButton_OnClick(object? sender, RoutedEventArgs e)
     {
-        ViewModel.DialogResult = DialogResult.Cancel;
-        Close(DialogResult.Cancel);
+        CloseInternal(DialogResult.Cancel);
+    }
+    
+    private void CloseInternal(DialogResult result)
+    {
+        ViewModel.DialogResult = result;
+        Close(DialogResult.Ok);
     }
 }

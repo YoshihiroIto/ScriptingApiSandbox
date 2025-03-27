@@ -16,6 +16,8 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
     internal ReadOnlyObservableCollection<IDialogElement> Elements => _group.Elements;
     internal Avalonia.Layout.Orientation AvaloniaOrientation => _group.AvaloniaOrientation;
 
+    internal Action<DialogResult>? RequireClose { get; set; }
+
     private readonly DialogGroupImpl _group = new()
     {
         Orientation = orientation
@@ -29,8 +31,7 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
             DataContext = this
         };
 
-        if (Closed is { })
-            dialog.Closed += (_, _) => Closed.Invoke(this, EventArgs.Empty);
+        dialog.Closed += (_, _) => Closed?.Invoke(this, EventArgs.Empty);
 
         var result = dialog.ShowDialogSync<DialogResult?>(ActiveWindow);
         return result ?? DialogResult.Cancel;
@@ -44,10 +45,14 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
             DataContext = this
         };
 
-        if (Closed is { })
-            dialog.Closed += (_, _) => Closed.Invoke(this, EventArgs.Empty);
+        dialog.Closed += (_, _) => Closed.Invoke(this, EventArgs.Empty);
 
         dialog.Show(ActiveWindow);
+    }
+
+    public void Close(DialogResult result = DialogResult.Ok)
+    {
+        RequireClose?.Invoke(result);
     }
 
     public IDialogText Text(string caption, string initial)
@@ -67,10 +72,10 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
 
     public IDialogButton Button(string caption)
         => _group.Button(caption);
-    
+
     public IDialogLabel Label(string caption)
         => _group.Label(caption);
-    
+
     public IDialogSeparator Separator()
         => _group.Separator();
 

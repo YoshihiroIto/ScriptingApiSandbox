@@ -22,6 +22,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
             dlg.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
             dlg.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
             
+            close = dlg.Group(Orientation.Horizontal)
+            close.Button("Close").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
+            close.Button("Close:Ok").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
+            close.Button("Close:Cancel").Clicked += lambda s, e: dlg.Close(DialogResult.Cancel)
+            
             result = dlg.ShowModal()
             print(f"result: {result}")
             

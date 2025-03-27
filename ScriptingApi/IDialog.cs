@@ -9,6 +9,8 @@ public interface IDialog : IDialogUIElementsHost
 
     DialogResult ShowModal();
     void Show();
+
+    void Close(DialogResult result);
 }
 
 public interface IDialogUIElementsHost
