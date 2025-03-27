@@ -16,7 +16,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
     public partial string Script { get; set; } =
         """
         def show_modal():
-            dlg = Dialog("ModalDialog Test")
+            dlg = Dialog("ModalDialog Sample")
             
             name = dlg.Text("Enter your name", "no-name")
             dlg.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
@@ -34,13 +34,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
                print(name.Text)
                
         def show_modeless():
-            dlg = Dialog("Dialog Test", Orientation.Horizontal)
+            dlg = Dialog("ModelessDialog Sample", Orientation.Horizontal)
             
             left = dlg.Group(Orientation.Vertical);
-            center = dlg.Group(Orientation.Horizontal);
+            dlg.Separator();
             right = dlg.Group(Orientation.Vertical);
-            
-            center.Separator();
             
             name = left.Text("Enter your name", "no-name")
             intValue = left.Int("Int", 10, -100, 100);
@@ -65,7 +63,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
             xyz.Bool("Y", False)
             xyz.Bool("Z", False)
             
-            pos = left.GroupBox("Rotate", Orientation.Vertical)
+            pos = right.GroupBox("Rotate", Orientation.Vertical)
             pos.Float("X", 0, -360, 360);
             pos.Float("Y", 0, -360, 360);
             pos.Float("Z", 0, -360, 360);
@@ -76,9 +74,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
             p2 = tab.Page("Page2")
             
             p0.Text("Text", "text")
-            p0.Bool("X", False)
-            p0.Bool("Y", False)
-            p1.Text("T0", "000")
+            p0.Bool("Width", True)
+            p0.Bool("Height", False)
+            p1.Text("Data", "000")
             p2.Float("Float", 20, -100, 100);
             
             dlg.Closed += lambda s, e: print(f"Dialog closed: {dlg.DialogResult}, {name.Text}, {intValue.Value}, {floatValue.Value}, {boolValue.Value}")

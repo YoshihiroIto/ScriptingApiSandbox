@@ -5,15 +5,15 @@
         <Setter Property="Template">
             <ControlTemplate>
                 <Border Background="{TemplateBinding Background}"
-                        BorderBrush="Gray"
+                        BorderBrush="#DDD"
                         BorderThickness="1">
                     <StackPanel>
-                        <Border Background="#FFE0E0E0">
+                        <Border Background="WhiteSmoke">
                             <ContentPresenter Margin="12"
                                               Content="{TemplateBinding Header}" />
                         </Border>
 
-                        <Border BorderBrush="Gray"
+                        <Border BorderBrush="#DDD"
                                 BorderThickness="0,1,0,0">
                             <ContentPresenter Margin="12"
                                               Content="{TemplateBinding Content}" />
