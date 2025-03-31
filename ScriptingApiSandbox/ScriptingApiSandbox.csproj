@@ -26,7 +26,7 @@
         </PackageReference>
         <PackageReference Include="AvaloniaEdit.TextMate" Version="11.2.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-        <PackageReference Include="ReactiveProperty" Version="9.7.0" />
+        <PackageReference Include="System.Reactive" Version="6.0.1" />
     </ItemGroup>
 
     <ItemGroup>

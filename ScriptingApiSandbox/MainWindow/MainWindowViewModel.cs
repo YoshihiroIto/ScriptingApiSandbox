@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Reactive.Disposables;
+using System.Collections.ObjectModel;
 using System.Reactive.Linq;
-using Reactive.Bindings.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Reactive.Bindings;
 using ScriptingApi;
 using ScriptingApiSandbox.Dialog;
 
@@ -86,29 +84,27 @@ public sealed partial class MainWindowViewModel : ObservableObject
     [ObservableProperty]
     public partial string AllFunctions { get; set; } = "";
 
-    public ReadOnlyReactiveCollection<string> Stdout { get; }
+    public ReadOnlyObservableCollection<string> Stdout { get; }
 
     private readonly ScriptContext _scriptContext = new();
-    private readonly ReactiveCollection<string> _stdout;
-    private readonly CompositeDisposable _trash = new();
+    private readonly ObservableCollection<string> _stdout = new();
+    private readonly IDisposable _standardOutputListener;
 
     public MainWindowViewModel()
     {
-        _stdout = new ReactiveCollection<string>().AddTo(_trash);
-        Stdout = _stdout.ToReadOnlyReactiveCollection().AddTo(_trash);
+        Stdout = new ReadOnlyObservableCollection<string>(_stdout);
 
-        Observable.FromEventPattern<EventHandler<StandardOutputEventArgs>, StandardOutputEventArgs>(
+        _standardOutputListener = Observable.FromEventPattern<EventHandler<StandardOutputEventArgs>, StandardOutputEventArgs>(
                 h => h,
                 h => _scriptContext.StandardOutput += h,
                 h => _scriptContext.StandardOutput -= h)
             .Select(e => e.EventArgs)
-            .Subscribe(e => _stdout.Add(e.Text))
-            .AddTo(_trash);
+            .Subscribe(e => _stdout.Add(e.Text));
 
         _scriptContext.SetType<DialogImpl>("Dialog");
         _scriptContext.SetType<DialogResult>(nameof(DialogResult));
         _scriptContext.SetType<Orientation>(nameof(Orientation));
-        
+
         foreach (var e in Enum.GetValues<Orientation>())
             _scriptContext.SetVariable(e.ToString(), e);
 
