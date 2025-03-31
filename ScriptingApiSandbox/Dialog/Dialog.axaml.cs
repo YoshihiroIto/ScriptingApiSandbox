@@ -36,6 +36,6 @@ public partial class Dialog : Window
     private void CloseInternal(DialogResult result)
     {
         ViewModel.DialogResult = result;
-        Close(DialogResult.Ok);
+        Close(result);
     }
 }

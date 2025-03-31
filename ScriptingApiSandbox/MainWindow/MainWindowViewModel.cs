@@ -22,14 +22,14 @@ public sealed partial class MainWindowViewModel : ObservableObject
             dlg.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
             
             close = dlg.Group(Horizontal)
-            close.Button("Close").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
-            close.Button("Close:Ok").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
-            close.Button("Close:Cancel").Clicked += lambda s, e: dlg.Close(DialogResult.Cancel)
+            close.Button("Close").Clicked += lambda s, e: dlg.Close(Ok)
+            close.Button("Close:Ok").Clicked += lambda s, e: dlg.Close(Ok)
+            close.Button("Close:Cancel").Clicked += lambda s, e: dlg.Close(Cancel)
             
             result = dlg.ShowModal()
             print(f"result: {result}")
             
-            if (result == DialogResult.Ok):
+            if (result == Ok):
                print(name.Text)
                
         def show_modeless():
@@ -103,11 +103,8 @@ public sealed partial class MainWindowViewModel : ObservableObject
             .Subscribe(e => _stdout.Add(e.Text));
 
         _scriptContext.SetType<DialogImpl>("Dialog");
-        _scriptContext.SetType<DialogResult>(nameof(DialogResult));
-        _scriptContext.SetType<Orientation>(nameof(Orientation));
-
-        foreach (var e in Enum.GetValues<Orientation>())
-            _scriptContext.SetVariable(e.ToString(), e);
+        _scriptContext.SetEnum<Orientation>();
+        _scriptContext.SetEnum<DialogResult>();
 
         ExecuteScript();
     }

@@ -41,6 +41,14 @@ public sealed class ScriptContext
         _scope.SetVariable(name, DynamicHelpers.GetPythonTypeFromType(type));
     }
     
+    public void SetEnum<T>() where T : struct, Enum 
+    {
+        SetType<T>(typeof(T).Name);
+        
+        foreach (var e in Enum.GetValues<T>())
+            SetVariable(e.ToString(), e);
+    }
+    
     public void RemoveVariable(string name)
     {
         _scope.RemoveVariable(name);
