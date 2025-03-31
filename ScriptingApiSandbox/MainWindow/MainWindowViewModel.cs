@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reactive.Linq;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -28,7 +29,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
             result = dlg.ShowModal()
             print(f"result: {result}")
             
-            if(result == DialogResult.Ok):
+            if (result == DialogResult.Ok):
                print(name.Text)
                
         def show_modeless():
@@ -82,7 +83,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
         """;
 
     [ObservableProperty]
-    public partial string AllFunctions { get; set; } = "";
+    public partial string[] AllFunctions { get; set; } = [];
 
     public ReadOnlyObservableCollection<string> Stdout { get; }
 
@@ -116,20 +117,18 @@ public sealed partial class MainWindowViewModel : ObservableObject
         _stdout.Clear();
         _scriptContext.Execute(Script);
 
-        AllFunctions = string.Join("\n", _scriptContext.AllFunctionNames);
+        AllFunctions = _scriptContext.AllFunctionNames.ToArray();
     }
 
     [RelayCommand]
-    private void ShowModal()
+    private void ExecuteFunction(string name)
     {
         ExecuteScript();
-        _scriptContext.CallFunction("show_modal");
+        _scriptContext.CallFunction(name);
     }
 
-    [RelayCommand]
-    private void ShowModeless()
+    partial void OnScriptChanged(string value)
     {
         ExecuteScript();
-        _scriptContext.CallFunction("show_modeless");
     }
 }

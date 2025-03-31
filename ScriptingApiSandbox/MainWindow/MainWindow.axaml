@@ -19,25 +19,35 @@
     </Design.DataContext>
 
     <DockPanel>
-        <StackPanel DockPanel.Dock="Top"
-                    Orientation="Horizontal">
-            <Button Margin="0,0,1,0"
-                    Command="{Binding ShowModalCommand}"
-                    Content="Show Modal" />
+        <ItemsControl DockPanel.Dock="Top"
+                      MinHeight="30"
+                      ItemsSource="{Binding AllFunctions}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="6" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
 
-            <Button Margin="0,0,1,0"
-                    Command="{Binding ShowModelessCommand}"
-                    Content="Show Modeless" />
-        </StackPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <!--  ReSharper disable once Xaml.PossibleNullReferenceException  -->
+                    <Button Command="{Binding $parent[mainWindow:MainWindow].((mainWindow:MainWindowViewModel)DataContext).ExecuteFunctionCommand}"
+                            CommandParameter="{Binding}">
+                        <TextBlock Text="{Binding}" />
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
 
         <Grid ColumnDefinitions="3*,2*">
             <avaloniaEdit:TextEditor x:Name="TextEditor"
                                      Grid.Column="0"
                                      BorderBrush="LightGray"
                                      BorderThickness="0,1,1,0"
-                                     ShowLineNumbers="True"
-                                     FontSize="12"
                                      FontFamily="Cascadia Code, Consolas, Menlo, Monospace"
+                                     FontSize="12"
+                                     ShowLineNumbers="True"
                                      SyntaxHighlighting="Python"
                                      TextChanged="TextEditor_OnTextChanged" />
 

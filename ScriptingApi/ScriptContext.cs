@@ -40,6 +40,11 @@ public sealed class ScriptContext
     {
         _scope.SetVariable(name, DynamicHelpers.GetPythonTypeFromType(type));
     }
+    
+    public void RemoveVariable(string name)
+    {
+        _scope.RemoveVariable(name);
+    }
 
     public dynamic GetVariable(string name)
     {
@@ -48,6 +53,8 @@ public sealed class ScriptContext
 
     public void Execute(string code)
     {
+        ClearAllFunctions();
+        
         try
         {
 #if false
@@ -65,6 +72,12 @@ public sealed class ScriptContext
             InvokeStandardOutput($"例外の種類: {ex.GetType().FullName}");
             InvokeStandardOutput($"スタックトレース: {ex.StackTrace}");
         }
+    }
+    
+    public void ClearAllFunctions()
+    {
+        foreach (var function in AllFunctionNames.ToArray())
+            RemoveVariable(function);
     }
 
     public object? CallFunction(string functionName)
