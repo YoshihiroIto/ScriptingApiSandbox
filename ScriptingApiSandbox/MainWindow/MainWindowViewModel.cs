@@ -22,7 +22,7 @@ public sealed partial class MainWindowViewModel : ObservableObject
             dlg.Button("ABC").Clicked += lambda s, e: print("ABC clicked")
             dlg.Button("DEF").Clicked += lambda s, e: print("DEF clicked")
             
-            close = dlg.Group(Orientation.Horizontal)
+            close = dlg.Group(Horizontal)
             close.Button("Close").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
             close.Button("Close:Ok").Clicked += lambda s, e: dlg.Close(DialogResult.Ok)
             close.Button("Close:Cancel").Clicked += lambda s, e: dlg.Close(DialogResult.Cancel)
@@ -34,11 +34,11 @@ public sealed partial class MainWindowViewModel : ObservableObject
                print(name.Text)
                
         def show_modeless():
-            dlg = Dialog("ModelessDialog Sample", Orientation.Horizontal)
+            dlg = Dialog("ModelessDialog Sample", Horizontal)
             
-            left = dlg.Group(Orientation.Vertical);
+            left = dlg.Group(Vertical);
             dlg.Separator();
-            right = dlg.Group(Orientation.Vertical);
+            right = dlg.Group(Vertical);
             
             name = left.Text("Enter your name", "no-name")
             intValue = left.Int("Int", 10, -100, 100);
@@ -58,12 +58,12 @@ public sealed partial class MainWindowViewModel : ObservableObject
             
             left.Button("ABC").Clicked += lambda s, e: print(f"ABC clicked: {name.Text}")
             
-            xyz = left.Group(Orientation.Horizontal)
+            xyz = left.Group(Horizontal)
             xyz.Bool("X", False)
             xyz.Bool("Y", False)
             xyz.Bool("Z", False)
             
-            pos = right.GroupBox("Rotate", Orientation.Vertical)
+            pos = right.GroupBox("Rotate", Vertical)
             pos.Float("X", 0, -360, 360);
             pos.Float("Y", 0, -360, 360);
             pos.Float("Z", 0, -360, 360);
@@ -108,6 +108,9 @@ public sealed partial class MainWindowViewModel : ObservableObject
         _scriptContext.SetType<DialogImpl>("Dialog");
         _scriptContext.SetType<DialogResult>(nameof(DialogResult));
         _scriptContext.SetType<Orientation>(nameof(Orientation));
+        
+        foreach (var e in Enum.GetValues<Orientation>())
+            _scriptContext.SetVariable(e.ToString(), e);
 
         ExecuteScript();
     }
