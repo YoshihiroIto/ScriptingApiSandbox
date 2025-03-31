@@ -45,7 +45,7 @@ public sealed class DialogImpl(string title, Orientation orientation = Orientati
             DataContext = this
         };
 
-        dialog.Closed += (_, _) => Closed.Invoke(this, EventArgs.Empty);
+        dialog.Closed += (_, _) => Closed?.Invoke(this, EventArgs.Empty);
 
         dialog.Show(ActiveWindow);
     }
